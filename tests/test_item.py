@@ -1,3 +1,4 @@
+import pytest
 from src.item import Item
 
 item1 = Item("Смартфон", 10000, 20)
