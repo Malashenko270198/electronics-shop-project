@@ -1,12 +1,24 @@
+import pytest
+
 from src.item import Item
 
-item1 = Item("Смартфон", 10000, 20)
-item2 = Item("Ноутбук", 20000, 5)
+
+@pytest.fixture
+def item():
+    return Item("Смартфон", 1000, 2)
 
 
-def test_pay_rate():
-    assert 10000 * Item.pay_rate == item1.price
-    assert item1.price == 10000
+def test_item_initialized(item) -> None:
+    assert item.name == "Смартфон"
+    assert item.price == 1000
+    assert item.quantity == 2
 
-    assert 20000 * Item.pay_rate == item2.price
-    assert item2.price == 20000
+
+def test_calculate_total_price(item) -> None:
+    assert item.calculate_total_price() == 2000
+
+
+def test_apply_discount(item) -> None:
+    Item.pay_rate = 0.8
+    item.apply_discount()
+    assert item.price == 800
